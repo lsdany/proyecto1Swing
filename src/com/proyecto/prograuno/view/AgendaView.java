@@ -5,12 +5,19 @@
  */
 package com.proyecto.prograuno.view;
 
+import com.proyecto.prograuno.model.Contacto;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author luisdany pernillo
  */
 public class AgendaView extends javax.swing.JFrame{
 
+    public static List<Contacto> contactos = new ArrayList<>();
+    
+    
     /**
      * Creates new form AgendaView
      */
@@ -66,6 +73,11 @@ public class AgendaView extends javax.swing.JFrame{
         jMenu3.add(jMenuItem4);
 
         jMenuItem5.setText("Salir");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem5);
 
         jMenuBar1.add(jMenu3);
@@ -133,11 +145,11 @@ public class AgendaView extends javax.swing.JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 613, Short.MAX_VALUE)
+            .addGap(0, 802, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 487, Short.MAX_VALUE)
+            .addGap(0, 610, Short.MAX_VALUE)
         );
 
         pack();
@@ -145,6 +157,8 @@ public class AgendaView extends javax.swing.JFrame{
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new NewContactView().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
@@ -154,6 +168,11 @@ public class AgendaView extends javax.swing.JFrame{
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
