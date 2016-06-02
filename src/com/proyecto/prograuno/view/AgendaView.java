@@ -5,7 +5,11 @@
  */
 package com.proyecto.prograuno.view;
 
+import com.proyecto.prograuno.controler.AdminContacto;
+import com.proyecto.prograuno.controler.ManagerText;
 import com.proyecto.prograuno.model.Contacto;
+import com.proyecto.prograuno.utils.Constant;
+import com.proyecto.prograuno.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +22,15 @@ public class AgendaView extends javax.swing.JFrame{
     public static List<Contacto> contactos = new ArrayList<>();
     
     
+    
     /**
      * Creates new form AgendaView
      */
     public AgendaView() {
         initComponents();
+        ManagerText fileContacto = new ManagerText();
+        contactos = fileContacto.readFile(Constant.path);
+        Utils.showContactos(contactos);
     }
 
     /**
@@ -56,6 +64,7 @@ public class AgendaView extends javax.swing.JFrame{
         jMenuItem14 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(200, 100));
 
         jMenu3.setText("Archivo");
 

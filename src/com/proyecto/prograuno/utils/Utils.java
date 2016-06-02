@@ -4,9 +4,11 @@
  */
 package com.proyecto.prograuno.utils;
 
+import com.proyecto.prograuno.model.Contacto;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -55,5 +57,17 @@ public class Utils {
         }
         
         return fecha;
+    }
+    
+    
+    public static void showContactos(List<Contacto> listContacto){
+        
+        if(listContacto!=null){
+            for(Contacto c : listContacto){
+                System.out.println(c.toString());
+            }
+            
+        }
+        
     }
 }
