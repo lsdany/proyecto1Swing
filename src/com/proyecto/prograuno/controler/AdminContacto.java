@@ -6,56 +6,71 @@
 package com.proyecto.prograuno.controler;
 
 import com.proyecto.prograuno.model.Contacto;
+import com.proyecto.prograuno.utils.Constant;
+import com.proyecto.prograuno.utils.Utils;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author luisdany
  */
 public class AdminContacto {
-    
+
 //    private Contacto contacto;
     private FileManager fileManagerText;
     private FileManager fileManagerBin;
-    private List<Contacto> listContacto;            
+    private List<Contacto> listContacto;
 
-    enum OPERACION {save,delete};
-    
-    
-    public AdminContacto(Contacto contacto){
+    enum OPERACION {
+        save, delete
+    };
+
+    public void addImage(Contacto contacto) {
+
+        fileManagerBin = new ManagerBinario();
+        fileManagerBin.writeFileImage(contacto);
+
+    }
+
+    public AdminContacto(List<Contacto> contacto) {
         listContacto = new ArrayList<>();
-        listContacto.add(contacto);
+        this.listContacto = contacto;
         fileManagerText = new ManagerText();
         fileManagerBin = new ManagerBinario();
     }
-    
-    public void addContacto(Contacto contacto){
-        if(contacto!=null){
+
+    public void addContacto(Contacto contacto) {
+        if (contacto != null) {
             listContacto.add(contacto);
         }
     }
-    
-    public String saveContacto(){
-        
-        if(listContacto != null && listContacto.size()>0){
-            fileManagerText.writeFile("/home/luisdany/contacts.txt",listContacto);
+
+    public String saveContacto() {
+
+        if (listContacto != null ) {
+            fileManagerText.writeFile(Constant.pathFiles+Constant.fileNameTxt, listContacto);
         }
-        
+
         return null;
     }
-    
-    public String delContacto(){
+
+    public String delContacto() {
         return null;
     }
-    
-    public List<Contacto> viewContactos(){
+
+    public List<Contacto> viewContactos() {
         return null;
     }
-    
-    public Contacto searchContacto(String nombre){
+
+    public Contacto searchContacto(String nombre) {
         return null;
     }
-    
-    
+
 }

@@ -7,6 +7,7 @@ package com.proyecto.prograuno.model;
 
 import com.proyecto.prograuno.utils.Utils;
 import java.util.Date;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -24,7 +25,16 @@ public class Contacto {
     private String nacionalidad;
     private String email;
     private String idFotografia;
+    private ImageIcon foto;
 
+    public ImageIcon getFoto() {
+        return foto;
+    }
+
+    public void setFoto(ImageIcon foto) {
+        this.foto = foto;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -107,15 +117,17 @@ public class Contacto {
 
     @Override
     public String toString() {
-        return "Contacto{" + "nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", telefono=" + telefono + ", edad=" + edad + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", nacionalidad=" + nacionalidad + ", email=" + email + ", idFotografia=" + idFotografia + '}';
+        return "Contacto{" + "nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", telefono=" + telefono + ", edad=" + edad + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", nacionalidad=" + nacionalidad + ", email=" + email + ", idFotografia=" + idFotografia + ", foto=" + foto + '}';
     }
+
+    
 
     /**
      * Devuelve la cadena de valores separados por ;
      * @return 
      */
     public String getString() {
-        return nombre + ";" + apellido + ";" + direccion + ";" + telefono + ";" + edad + ";" + Utils.getDateString(fechaNacimiento) + ";" + genero + ";" + nacionalidad + ";" + email + ";"+idFotografia;
+        return nombre + ";" + apellido + ";" + direccion + ";" + telefono + ";" + edad + ";" + Utils.getDateString(fechaNacimiento) + ";" + genero + ";" + nacionalidad + ";" + email + ";"+idFotografia+"&";
     }
     
 }

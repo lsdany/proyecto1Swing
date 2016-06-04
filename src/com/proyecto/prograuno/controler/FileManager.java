@@ -18,5 +18,7 @@ public abstract class FileManager {
     
     abstract public void writeFile(String path, List<Contacto> contacto);
     
+    abstract void writeFileImage(Contacto contacto);
+    
     
 }

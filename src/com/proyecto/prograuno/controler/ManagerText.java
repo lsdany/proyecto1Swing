@@ -37,26 +37,44 @@ public class ManagerText extends FileManager {
     public List<Contacto> readFile(String path) {
 
         try {
-            Scanner in = new Scanner(new FileReader(path)).useDelimiter("&");
+            Scanner in = new Scanner(new FileReader(path));//.useDelimiter("&");
 
             listContactosRAW = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
 
-            while (in.hasNextLine()) {
+            while (in.hasNext()) {
 
-                listContactosRAW.add(in.next());
+//                if(!in.next().equals("\n")){
+//                    System.out.println(";;;;; "+in.next());
+                    sb.append(in.next());
+//                }
+                
+//                listContactosRAW.add(in.next());
 
             }
 
+            String[] conts = sb.toString().split("&");
+            for(String c : conts){
+                listContactosRAW.add(c);
+            }
+            
+            
+            System.out.println("--------- " + sb);
             System.out.println("array size" + listContactosRAW.size());
-            System.out.println("//" + listContactosRAW);
+//            System.out.println("//" + listContactosRAW);
 
-            getContactos();
+            if(!sb.toString().trim().equals("")){
+                getContactos();
+                
+            }
+
+            
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
 
-        return null;
+        return listContactos;
     }
 
     @Override
@@ -73,7 +91,7 @@ public class ManagerText extends FileManager {
 
         if (listContact.size() > 0) {
             try {
-                Files.write(file, listContactosRAW, Charset.forName("UTF-8"));
+                Files.write(file, listContact, Charset.forName("UTF-8"));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -81,12 +99,12 @@ public class ManagerText extends FileManager {
 
     }
 
-    public static void main(String[] args) {
-
-        ManagerText mt = new ManagerText();
-        mt.readFile("/home/luisdany/contacts.txt");
-        mt.writeFile("/home/luisdany/contactsBK1.txt", null);
-    }
+//    public static void main(String[] args) {
+//
+//        ManagerText mt = new ManagerText();
+//        mt.readFile("/home/luisdany/contacts.txt");
+//        mt.writeFile("/home/luisdany/contactsBK1.txt", null);
+//    }
 
     private void getContactos() {
 
@@ -101,16 +119,18 @@ public class ManagerText extends FileManager {
                 Contacto cto = new Contacto();
                 cto.setNombre(lstC[0]);
                 cto.setApellido(lstC[1]);
-                cto.setGenero(lstC[2]);
-                cto.setDireccion(lstC[3]);
-                cto.setTelefono(lstC[4]);//Integer.getInteger(lstC[4]));
+         
+                cto.setDireccion(lstC[2]);
+                cto.setTelefono(lstC[3]);//Integer.getInteger(lstC[4]));
+                cto.setEdad(lstC[4]);
                 cto.setFechaNacimiento(Utils.getDateFormat(lstC[5]));
-                cto.setEdad(lstC[6]);
+                
+                cto.setGenero(lstC[6]);
                 cto.setNacionalidad(lstC[7]);
                 cto.setEmail(lstC[8]);
                 cto.setIdFotografia(lstC[9]);
 
-                System.out.println("Contacto: " + cto.toString());
+//                System.out.println("Contacto: " + cto.toString());
 
                 listContactos.add(cto);
 
@@ -118,6 +138,11 @@ public class ManagerText extends FileManager {
 
         }
 
+    }
+
+    @Override
+    void writeFileImage(Contacto contacto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
