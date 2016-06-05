@@ -6,11 +6,14 @@
 package com.proyecto.prograuno.controler;
 
 import com.proyecto.prograuno.model.Contacto;
+import java.io.File;
 import java.util.List;
 
 /**
  *
- * @author luisdany
+ * @author luisdany pernillo
+ * @carne 3190-13-1263
+ * 
  */
 public abstract class FileManager {
     
@@ -19,6 +22,8 @@ public abstract class FileManager {
     abstract public void writeFile(String path, List<Contacto> contacto);
     
     abstract void writeFileImage(Contacto contacto);
+    
+    abstract List<Contacto> readFile(File file);
     
     
 }

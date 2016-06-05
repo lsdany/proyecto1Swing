@@ -70,6 +70,8 @@
                       <EmptySpace min="-2" pref="189" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="btnSave" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
                   </Group>
@@ -135,7 +137,10 @@
                   <Component id="lblShowFoto" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="43" max="32767" attributes="0"/>
-              <Component id="btnSave" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -153,6 +158,9 @@
           <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(mes)" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbMesActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String[] mes = new String[12];&#xa;for(int i = 1 ; i &lt;= 12 ; i++){&#xa;    mes[i-1] = &quot;&quot;+i;&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -169,6 +177,9 @@
           <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(anios)" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbAzoActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String[] anios = new String[47];&#xa;for(int i = 1970; i &lt;= 2016 ; i++){&#xa;    anios[i-1970] = &quot;&quot;+i;&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -286,10 +297,21 @@
           <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(dias)" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbDiaActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="String[] dias = new String[31];&#xa;for(int i = 1 ; i &lt;=31;i++){&#xa;    dias[i-1]=&quot;&quot;+i;&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

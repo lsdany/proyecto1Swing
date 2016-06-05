@@ -11,10 +11,12 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author luisdany
+ * @author luisdany pernillo
+ * @carne 3190-13-1263
+ *
  */
 public class Contacto {
-    
+
     private String nombre;
     private String apellido;
     private String direccion;
@@ -27,6 +29,35 @@ public class Contacto {
     private String idFotografia;
     private ImageIcon foto;
 
+    public String isValid() {
+
+        String message = null;
+
+        if (nombre != null && !nombre.equals("")) {
+            if (apellido != null && !apellido.equals("")) {
+                if (direccion != null && !direccion.equals("")) {
+                    if (telefono != null && !telefono.equals("")) {
+                        if (email != null && !email.equals("")) {
+                            return null;
+                        } else {
+                            message = "Debe ingresar email";
+                        }
+                    } else {
+                        message = "Debe ingresar telefono";
+                    }
+                } else {
+                    message = "Debe ingresar direccion";
+                }
+            } else {
+                message = "Debe ingresar apellido";
+            }
+        } else {
+            message = " Debe ingresar nombre ";
+        }
+
+        return message;
+    }
+
     public ImageIcon getFoto() {
         return foto;
     }
@@ -34,7 +65,7 @@ public class Contacto {
     public void setFoto(ImageIcon foto) {
         this.foto = foto;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -120,14 +151,13 @@ public class Contacto {
         return "Contacto{" + "nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", telefono=" + telefono + ", edad=" + edad + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", nacionalidad=" + nacionalidad + ", email=" + email + ", idFotografia=" + idFotografia + ", foto=" + foto + '}';
     }
 
-    
-
     /**
      * Devuelve la cadena de valores separados por ;
-     * @return 
+     *
+     * @return
      */
     public String getString() {
-        return nombre + ";" + apellido + ";" + direccion + ";" + telefono + ";" + edad + ";" + Utils.getDateString(fechaNacimiento) + ";" + genero + ";" + nacionalidad + ";" + email + ";"+idFotografia+"&";
+        return nombre + ";" + apellido + ";" + direccion + ";" + telefono + ";" + edad + ";" + Utils.getDateString(fechaNacimiento) + ";" + genero + ";" + nacionalidad + ";" + email + ";" + idFotografia + "&";
     }
-    
+
 }

@@ -8,33 +8,37 @@ package com.proyecto.prograuno.view;
 import com.proyecto.prograuno.controler.AdminContacto;
 import com.proyecto.prograuno.model.Contacto;
 import com.proyecto.prograuno.utils.Utils;
+import java.util.Date;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author luisdany
+ * @author luisdany pernillo
+ * @carne 3190-13-1263
+ *
  */
 public class EditContactView extends javax.swing.JDialog {
 
     private boolean isImageCharge = false;
     java.awt.Frame parent;
     int rowSelected;
-    
+
     /**
      * Creates new form EditContactView
      */
-    public EditContactView(java.awt.Frame parent, boolean modal,int rowSelected) {
+    public EditContactView(java.awt.Frame parent, boolean modal, int rowSelected) {
         super(parent, modal);
         this.parent = parent;
         this.rowSelected = rowSelected;
         initComponents();
-        
-        
+        this.setLocation(350, 200);
+
         pasarInfo();
-        
+
     }
-    
-    
-    private void pasarInfo(){
+
+    private void pasarInfo() {
         Contacto contacto = AgendaView.contactos.get(rowSelected);
         txtNombre.setText(contacto.getNombre());
         txtApellido.setText(contacto.getApellido());
@@ -43,6 +47,12 @@ public class EditContactView extends javax.swing.JDialog {
         txtEmail.setText(contacto.getEmail());
         txtTelefono.setText(contacto.getTelefono());
         lblShowFoto.setIcon(contacto.getFoto());
+        
+        cmbNacionalidad.setSelectedItem(contacto.getNacionalidad());
+        String fecha[] = Utils.getFechaArray(contacto.getFechaNacimiento());
+        cmbAzo.setSelectedItem(fecha[2]);
+        cmbMes.setSelectedItem(fecha[1]);
+        cmbDia.setSelectedItem(fecha[0]);
     }
 
     /**
@@ -66,17 +76,17 @@ public class EditContactView extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbDia = new javax.swing.JComboBox<>();
         btnSave = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
         lblShowFoto = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbMes = new javax.swing.JComboBox<>();
         txtApellido = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cmbNacionalidad = new javax.swing.JComboBox<>();
+        cmbAzo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -111,7 +121,7 @@ public class EditContactView extends javax.swing.JDialog {
         for(int i = 1 ; i <=31;i++){
             dias[i-1]=""+i;
         }
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(dias));
+        cmbDia.setModel(new javax.swing.DefaultComboBoxModel<>(dias));
 
         btnSave.setText("Editar");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -142,18 +152,23 @@ public class EditContactView extends javax.swing.JDialog {
         for(int i = 1 ; i <= 12 ; i++){
             mes[i-1] = ""+i;
         }
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(mes));
+        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(mes));
+        cmbMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMesActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Nacionalidad:");
 
         String[] nacionalidades = new String[] {"Guatemalteco", "Mexicano", "Argentino", "Noruego", "Húngaro", "Ruso"};
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(nacionalidades));
+        cmbNacionalidad.setModel(new javax.swing.DefaultComboBoxModel<>(nacionalidades));
 
         String[] anios = new String[47];
         for(int i = 1970; i <= 2016 ; i++){
             anios[i-1970] = ""+i;
         }
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(anios));
+        cmbAzo.setModel(new javax.swing.DefaultComboBoxModel<>(anios));
 
         jLabel3.setText("Apellido:");
 
@@ -183,18 +198,18 @@ public class EditContactView extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cmbGenero2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cmbAzo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                                     .addComponent(txtApellido)
                                     .addComponent(txtDireccion)
                                     .addComponent(txtTelefono)
                                     .addComponent(txtEdad)
                                     .addComponent(txtEmail)
-                                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblShowFoto))))
                         .addGap(189, 189, 189))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -229,16 +244,16 @@ public class EditContactView extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbAzo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -258,13 +273,14 @@ public class EditContactView extends javax.swing.JDialog {
 
     private void cmbGenero2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGenero2ActionPerformed
         // TODO add your handling code here:
-        String seleccion = cmbGenero.getSelectedItem().toString();
-        if(seleccion != null && seleccion.equals("M") && !isImageCharge){
-            lblShowFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto/prograuno/images/man2.png")));
-        }else
-        if(seleccion != null && seleccion.equals("F") && !isImageCharge){
-            lblShowFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto/prograuno/images/woman2.png")));
-        }
+//        String seleccion = cmbGenero.getSelectedItem().toString();
+//        if (seleccion != null && seleccion.equals("M") && !isImageCharge) {
+//            lblShowFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto/prograuno/images/man2.png")));
+//        } else {
+//            if (seleccion != null && seleccion.equals("F") && !isImageCharge) {
+//                lblShowFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto/prograuno/images/woman2.png")));
+//            }
+//        }
     }//GEN-LAST:event_cmbGenero2ActionPerformed
 
     private void cmbGenero2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmbGenero2PropertyChange
@@ -274,35 +290,43 @@ public class EditContactView extends javax.swing.JDialog {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
 
-        if (txtNombre.getText() != null && !txtNombre.getText().equals("")) {
+        
 
-//            Contacto contacto = new Contacto();
-//
-//            contacto.setNombre(txtNombre.getText());
-//            contacto.setApellido(txtApellido.getText());
-//            contacto.setGenero(null);
-//            contacto.setDireccion(txtDireccion.getText());
-//            contacto.setTelefono(txtTelefono.getText());
-//            contacto.setFechaNacimiento(null);
-//            contacto.setEdad(null);
-//            contacto.setNacionalidad(null);
-//            contacto.setEmail(null);
-//            contacto.setIdFotografia(null);
+            Contacto contacto = new Contacto();
+
+
+            contacto.setNombre(txtNombre.getText());
+            contacto.setApellido(txtApellido.getText());
+            contacto.setGenero(AgendaView.contactos.get(rowSelected).getGenero());
+            contacto.setDireccion(txtDireccion.getText());
+            contacto.setTelefono(txtTelefono.getText());
+            Date fechaNac = Utils.calcularFechaNacimiento(cmbDia.getSelectedItem().toString(), cmbMes.getSelectedItem().toString(), cmbAzo.getSelectedItem().toString());
+            contacto.setFechaNacimiento(fechaNac);
+            String edad = Utils.calcularEdad(fechaNac);
+            contacto.setEdad(edad);
+            contacto.setNacionalidad(cmbNacionalidad.getSelectedItem().toString());
+            contacto.setEmail(txtEmail.getText());
+            contacto.setIdFotografia(contacto.getApellido() + contacto.getNombre());
+            contacto.setFoto((ImageIcon) lblShowFoto.getIcon());
+
 //
 //            //            FileManager fm = new ManagerText();
 //
 //            AgendaView.contactos.add(contacto);
-            
-            
-            AgendaView.contactos.get(rowSelected).setApellido(txtApellido.getText());
 
-            Utils.showContactos(AgendaView.contactos);
-            this.setVisible(false);
-            parent.remove(this);
-            AdminContacto ac = new AdminContacto(AgendaView.contactos);
-            ac.saveContacto();
+            if (contacto.isValid() != null) {
+                 JOptionPane.showMessageDialog(parent, contacto.isValid());
+            } else {
+                AgendaView.contactos.get(rowSelected).setApellido(contacto.getApellido());
 
-        }
+                Utils.showContactos(AgendaView.contactos);
+                this.setVisible(false);
+                parent.remove(this);
+                AdminContacto ac = new AdminContacto(AgendaView.contactos);
+                ac.saveContacto();
+            }
+
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
@@ -318,17 +342,18 @@ public class EditContactView extends javax.swing.JDialog {
 //        }
     }//GEN-LAST:event_lblShowFotoMouseClicked
 
-  
+    private void cmbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> cmbGenero;
-    private javax.swing.JComboBox<String> cmbGenero1;
+    private javax.swing.JComboBox<String> cmbAzo;
+    private javax.swing.JComboBox<String> cmbDia;
     private javax.swing.JComboBox<String> cmbGenero2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> cmbMes;
+    private javax.swing.JComboBox<String> cmbNacionalidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

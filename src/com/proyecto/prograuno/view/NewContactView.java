@@ -8,18 +8,19 @@ package com.proyecto.prograuno.view;
 import com.proyecto.prograuno.controler.AdminContacto;
 import com.proyecto.prograuno.model.Contacto;
 import com.proyecto.prograuno.utils.Utils;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author luisdany
+ * @author luisdany pernillo
+ * @carne 3190-13-1263
+ *
  */
 public class NewContactView extends javax.swing.JDialog {
 
@@ -69,6 +70,7 @@ public class NewContactView extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         cmbDia = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -79,6 +81,11 @@ public class NewContactView extends javax.swing.JDialog {
             mes[i-1] = ""+i;
         }
         cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(mes));
+        cmbMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMesActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Nacionalidad:");
 
@@ -87,6 +94,11 @@ public class NewContactView extends javax.swing.JDialog {
             anios[i-1970] = ""+i;
         }
         cmbAzo.setModel(new javax.swing.DefaultComboBoxModel<>(anios));
+        cmbAzo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAzoActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Email:");
 
@@ -147,6 +159,18 @@ public class NewContactView extends javax.swing.JDialog {
             dias[i-1]=""+i;
         }
         cmbDia.setModel(new javax.swing.DefaultComboBoxModel<>(dias));
+        cmbDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbDiaActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,6 +213,8 @@ public class NewContactView extends javax.swing.JDialog {
                                     .addComponent(lblShowFoto))))
                         .addGap(189, 189, 189))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(29, 29, 29)
                         .addComponent(btnSave)
                         .addGap(139, 139, 139))))
         );
@@ -240,7 +266,9 @@ public class NewContactView extends javax.swing.JDialog {
                     .addComponent(jLabel11)
                     .addComponent(lblShowFoto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(btnSave)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
+                    .addComponent(jButton1))
                 .addGap(111, 111, 111))
         );
 
@@ -252,10 +280,8 @@ public class NewContactView extends javax.swing.JDialog {
         String seleccion = cmbGenero.getSelectedItem().toString();
         if (seleccion != null && seleccion.equals("M") && !isImageCharge) {
             lblShowFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto/prograuno/images/man2.png")));
-        } else {
-            if (seleccion != null && seleccion.equals("F") && !isImageCharge) {
-                lblShowFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto/prograuno/images/woman2.png")));
-            }
+        } else if (seleccion != null && seleccion.equals("F") && !isImageCharge) {
+            lblShowFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyecto/prograuno/images/woman2.png")));
         }
 
     }//GEN-LAST:event_cmbGeneroActionPerformed
@@ -266,9 +292,7 @@ public class NewContactView extends javax.swing.JDialog {
     }//GEN-LAST:event_cmbGeneroPropertyChange
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-
-        if (txtNombre.getText() != null && !txtNombre.getText().equals("")) {
+        //accion del boton guardar
 
             Contacto contacto = new Contacto();
 
@@ -289,18 +313,24 @@ public class NewContactView extends javax.swing.JDialog {
             //            FileManager fm = new ManagerText();
             System.out.println("Agregando " + contacto.toString());
 
-            AgendaView.contactos.add(contacto);
+            if (contacto.isValid() != null) {
+                
+                JOptionPane.showMessageDialog(parent, contacto.isValid());
+                
+            } else {
+                AgendaView.contactos.add(contacto);
 
-            AdminContacto ac = new AdminContacto(AgendaView.contactos);
-            ac.saveContacto();
-            ac.addImage(contacto);
+                AdminContacto ac = new AdminContacto(AgendaView.contactos);
+                ac.saveContacto();
+                ac.addImage(contacto);
 
-            Utils.showContactos(AgendaView.contactos);
-            this.setVisible(false);
-            parent.setVisible(true);
+                Utils.showContactos(AgendaView.contactos);
+                this.setVisible(false);
+                parent.setVisible(true);
+            }
+
             //            fm.writeFile(Constant.path, contactos);
-
-        }
+        
 
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -316,17 +346,51 @@ public class NewContactView extends javax.swing.JDialog {
             BufferedImage img = null;
             try {
                 img = ImageIO.read(selectedFile);
+
+                BufferedImage imgEdit = Utils.cambiaTamanioImagen(img);
+
                 ImageIcon imgLabel = new ImageIcon();
-                imgLabel.setImage(img);
-                
+                imgLabel.setImage(imgEdit);
+
                 lblShowFoto.setIcon(imgLabel);
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
     }//GEN-LAST:event_lblShowFotoMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // action cancelar 
+
+        this.setVisible(false);
+        parent.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cmbAzoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAzoActionPerformed
+        // evento cmabio de fecha para calcular edad
+        Date fechaNac = Utils.calcularFechaNacimiento(cmbDia.getSelectedItem().toString(), cmbMes.getSelectedItem().toString(), cmbAzo.getSelectedItem().toString());
+
+        String edad = Utils.calcularEdad(fechaNac);
+        txtEdad.setText(edad);
+    }//GEN-LAST:event_cmbAzoActionPerformed
+
+    private void cmbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesActionPerformed
+        // evento para mes
+        Date fechaNac = Utils.calcularFechaNacimiento(cmbDia.getSelectedItem().toString(), cmbMes.getSelectedItem().toString(), cmbAzo.getSelectedItem().toString());
+
+        String edad = Utils.calcularEdad(fechaNac);
+        txtEdad.setText(edad);
+    }//GEN-LAST:event_cmbMesActionPerformed
+
+    private void cmbDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDiaActionPerformed
+        // TODO add your handling code here:
+        Date fechaNac = Utils.calcularFechaNacimiento(cmbDia.getSelectedItem().toString(), cmbMes.getSelectedItem().toString(), cmbAzo.getSelectedItem().toString());
+
+        String edad = Utils.calcularEdad(fechaNac);
+        txtEdad.setText(edad);
+    }//GEN-LAST:event_cmbDiaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -336,6 +400,7 @@ public class NewContactView extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbGenero;
     private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JComboBox<String> cmbNacionalidad;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

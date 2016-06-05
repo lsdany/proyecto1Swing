@@ -6,12 +6,13 @@ package com.proyecto.prograuno.utils;
 
 import com.proyecto.prograuno.model.Contacto;
 import com.proyecto.prograuno.view.AgendaView;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -90,17 +91,18 @@ public class Utils {
         return fecha;
     }
 
-//    public static String calcularEdad(Date fechaNac){
-//        
-//        Date hoy = new Date();
-//        long edad = hoy.getTime() - fechaNac.getTime();
-//        
-//        Date edad_ = new Date(edad);
-//        
-//        System.out.println("Edad "+edad_);
-//        
-//        return null;
-//    }
+    public static String[] getFechaArray(Date fechaNac){
+        
+        System.out.println("Fecha nac "+fechaNac);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(fechaNac);
+        System.out.println("fecha split "+fecha);
+        String fecha_[] = fecha.split("/");
+        
+        return fecha_;
+    }
+    
     public static String calcularEdad(Date fechaNac) {
 
         Date fechaActual = new Date();
@@ -109,33 +111,51 @@ public class Utils {
 
         String fechaNac_ = sdf.format(fechaNac);
 
-        String[] dat1 = fechaNac_.split("/");
-        String[] dat2 = hoy.split("/");
-        int azo = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
-        int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+        String[] fec1 = fechaNac_.split("/");
+        String[] fec2 = hoy.split("/");
+        int azo = Integer.parseInt(fec2[2]) - Integer.parseInt(fec1[2]);
+        int mes = Integer.parseInt(fec2[1]) - Integer.parseInt(fec1[1]);
         if (mes < 0) {
             azo = azo - 1;
         } else if (mes == 0) {
-            int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+            int dia = Integer.parseInt(fec2[0]) - Integer.parseInt(fec1[0]);
             if (dia > 0) {
                 azo = azo - 1;
             }
         }
         System.out.println("edad " + azo);
-        return ""+azo;
+        return "" + azo;
     }
 
-    public static String getCorrelativo(){
-        
-//        int tamanio = AgendaView.contactos.size();
-//        
-//        Contacto c = AgendaView.contactos.get(tamanio-1);
-//        c.get
-//        
-        return null;
+    public static String getPathSO() {
+
+        String ruta = null;
+
+        if (AgendaView.osType.equals("Linux")) {
+            System.out.println("El SO es un linux");
+            ruta = Constant.pathFilesLinux;
+            System.out.println(ruta);
+        } else {
+            System.out.println("El SO es un windows");
+            ruta = Constant.pathFilesWin;
+            System.out.println(ruta);
+        }
+
+        return ruta;
+
     }
-    
-    
+
+    public static BufferedImage cambiaTamanioImagen(BufferedImage image) {
+        int width = 185;
+        int height = 190;
+        BufferedImage buffImg = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
+        Graphics2D g2d = (Graphics2D) buffImg.createGraphics();
+        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+        g2d.drawImage(image, 0, 0, width, height, null);
+        g2d.dispose();
+        return buffImg;
+    }
+
     public static void main(String[] args) {
 
 //        Utils u = new Utils();

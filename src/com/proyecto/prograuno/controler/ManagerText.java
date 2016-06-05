@@ -7,6 +7,7 @@ package com.proyecto.prograuno.controler;
 
 import com.proyecto.prograuno.model.Contacto;
 import com.proyecto.prograuno.utils.Utils;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,17 +16,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
  * @author luisdany pernillo
- *
+ * @carne 3190-13-1263
+ * 
  */
 public class ManagerText extends FileManager {
 
@@ -44,12 +44,7 @@ public class ManagerText extends FileManager {
 
             while (in.hasNext()) {
 
-//                if(!in.next().equals("\n")){
-//                    System.out.println(";;;;; "+in.next());
                     sb.append(in.next());
-//                }
-                
-//                listContactosRAW.add(in.next());
 
             }
 
@@ -61,7 +56,6 @@ public class ManagerText extends FileManager {
             
             System.out.println("--------- " + sb);
             System.out.println("array size" + listContactosRAW.size());
-//            System.out.println("//" + listContactosRAW);
 
             if(!sb.toString().trim().equals("")){
                 getContactos();
@@ -99,13 +93,6 @@ public class ManagerText extends FileManager {
 
     }
 
-//    public static void main(String[] args) {
-//
-//        ManagerText mt = new ManagerText();
-//        mt.readFile("/home/luisdany/contacts.txt");
-//        mt.writeFile("/home/luisdany/contactsBK1.txt", null);
-//    }
-
     private void getContactos() {
 
         if (listContactosRAW != null && listContactosRAW.size() > 0) {
@@ -129,9 +116,6 @@ public class ManagerText extends FileManager {
                 cto.setNacionalidad(lstC[7]);
                 cto.setEmail(lstC[8]);
                 cto.setIdFotografia(lstC[9]);
-
-//                System.out.println("Contacto: " + cto.toString());
-
                 listContactos.add(cto);
 
             }
@@ -143,6 +127,38 @@ public class ManagerText extends FileManager {
     @Override
     void writeFileImage(Contacto contacto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    List<Contacto> readFile(File file) {
+        try {
+            Scanner in = new Scanner(file);//.useDelimiter("&");
+
+            listContactosRAW = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
+
+            while (in.hasNext()) {
+                    sb.append(in.next());
+            }
+
+            String[] conts = sb.toString().split("&");
+            for(String c : conts){
+                listContactosRAW.add(c);
+            }
+            
+            
+            System.out.println("--------- " + sb);
+            System.out.println("array size" + listContactosRAW.size());
+
+            if(!sb.toString().trim().equals("")){
+                getContactos();
+                
+            }
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return listContactos;
     }
 
 }

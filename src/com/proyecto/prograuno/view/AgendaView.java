@@ -12,39 +12,54 @@ import com.proyecto.prograuno.controler.ManagerText;
 import com.proyecto.prograuno.model.Contacto;
 import com.proyecto.prograuno.utils.Constant;
 import com.proyecto.prograuno.utils.Utils;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author luisdany pernillo
+ * @carne 3190-13-1263
+ *
  */
-public class AgendaView extends javax.swing.JFrame{
+public class AgendaView extends javax.swing.JFrame {
 
-    public static List<Contacto> contactos; 
+    public static List<Contacto> contactos;
     NewContactView ncv = new NewContactView(this, false);
     ListContactoView lcv;
-    String osType;
-    
+    public static String osType;
+
     /**
      * Creates new form AgendaView
      */
     public AgendaView() {
+
+//        for(UIManager.LookAndFeelInfo laf:UIManager.getInstalledLookAndFeels()){
+//            if("Nimbus".equals(laf.getName()))
+//                try {
+//                UIManager.setLookAndFeel(laf.getClassName());
+//                    System.out.println("nimbus!!!");
+//                break;
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//        }
         initComponents();
-        
+
         osType = System.getProperty("os.name");
-        
-        
+
         ManagerText fileContacto = new ManagerText();
-        contactos = fileContacto.readFile(Constant.pathFiles+Constant.fileNameTxt);
-        if(contactos == null){
+        contactos = fileContacto.readFile(Utils.getPathSO() + Constant.fileNameTxt);
+        if (contactos == null) {
             contactos = new ArrayList<>();
-        }else{
+        } else {
             FileManager fm = new ManagerBinario();
-                fm.readFile(null);
+            fm.readFile(null);
         }
         Utils.showContactos(contactos);
-        
+
     }
 
     /**
@@ -56,8 +71,7 @@ public class AgendaView extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
-        jButton1 = new javax.swing.JButton();
+        jFileChooser1 = new javax.swing.JFileChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -79,46 +93,37 @@ public class AgendaView extends javax.swing.JFrame{
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addGap(213, 213, 213)
-                .addComponent(jButton1)
-                .addContainerGap(340, Short.MAX_VALUE))
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jButton1)
-                .addContainerGap(232, Short.MAX_VALUE))
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(300, 100));
+        setLocation(new java.awt.Point(350, 200));
 
         jMenu3.setText("Archivo");
 
         jMenu4.setText("Cargar nuevos contactos");
 
         jMenuItem6.setText("Sustitutiva");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem6);
 
         jMenuItem7.setText("Extensiva");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem7);
 
         jMenu3.add(jMenu4);
 
         jMenuItem4.setText("Guardar contactos actuales");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuItem5.setText("Salir");
@@ -194,6 +199,11 @@ public class AgendaView extends javax.swing.JFrame{
         jMenu2.add(jMenuItem13);
 
         jMenuItem14.setText("Acerca de...");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem14);
 
         jMenuBar1.add(jMenu2);
@@ -217,11 +227,11 @@ public class AgendaView extends javax.swing.JFrame{
     private void mnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnNuevoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        
+
         ncv.setVisible(true);
         ncv.setLocation(100, 200);
-        
-        
+
+
     }//GEN-LAST:event_mnNuevoActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
@@ -230,6 +240,12 @@ public class AgendaView extends javax.swing.JFrame{
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
+        try {
+            File path = new File("src/com/proyecto/prograuno/images/manual.pdf");
+            Desktop.getDesktop().open(path);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -239,28 +255,69 @@ public class AgendaView extends javax.swing.JFrame{
 
     private void mnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnModificarActionPerformed
         // TODO add your handling code here:
-        lcv = new ListContactoView(this, false,true);
+        lcv = new ListContactoView(this, false, true);
         lcv.setVisible(true);
-        
-        
-    }//GEN-LAST:event_mnModificarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        System.out.println("hello");
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_mnModificarActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        lcv = new ListContactoView(this, false,false);
+        lcv = new ListContactoView(this, false, false);
         lcv.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-   
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // carga sustitutiva
+
+        int result = jFileChooser1.showOpenDialog(jMenuItem6);
+        if (result == jFileChooser1.APPROVE_OPTION) {
+
+            File selectedFile = jFileChooser1.getSelectedFile();
+
+            AdminContacto ac = new AdminContacto(contactos);
+            ac.reloadContacto(selectedFile);
+
+        }
+
+        Utils.showContactos(contactos);
+
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // sustitucion extensiva
+
+        int result = jFileChooser1.showOpenDialog(jMenuItem6);
+        if (result == jFileChooser1.APPROVE_OPTION) {
+
+            File selectedFile = jFileChooser1.getSelectedFile();
+
+            AdminContacto ac = new AdminContacto(contactos);
+            ac.extendContacto(selectedFile);
+
+        }
+
+        Utils.showContactos(contactos);
+
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // Guardar todo
+        AdminContacto ac = new AdminContacto(contactos);
+        ac.saveContacto();
+        ac.addImages(contactos);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+        InfoView iv = new InfoView(this, true);
+        iv.setVisible(true);
+
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JDialog jDialog1;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
